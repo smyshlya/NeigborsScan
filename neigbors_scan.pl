@@ -539,19 +539,23 @@ sub download_proteins_from_range
 		    if ($debug) {print "$fp contains tyrosine rec $input_an: start - ${$start_hash}{$input_an}, end - ${$end_hash}{$input_an}\n";}
 		    $tyrosine_rec_start{$fp}=${$start_hash}{$input_an};
 		    $tyrosine_rec_end{$fp}=${$end_hash}{$input_an};
+		    my @keys;
 		    foreach my $key (keys %$start_hash) {
 			if ($tyrosine_rec_start{$fp}-$range <= ${$start_hash}{$key} && ${$start_hash}{$key} <=$tyrosine_rec_start{$fp}+$range)
 			{
 			    $count++;
+			    push(@keys, $key);
 			    if ($debug){print "$key passed! (start is ${$start_hash}{$key}, end is ${$end_hash}{$key}), strand is ${$strand_hash}{$key}\n";}
 			    my $temp_file=$fp.".".$key.".tmp";
-			    download_proteins_using_acc_num($temp_file, $key);
-			    open (my $temp_fh, '<', $temp_file);
-			    while ( my $line = <$temp_fh> ) {
-				print $protein_fh $line;
-			    }
+#			    download_proteins_using_acc_num($temp_file, $key);
+#			    open (my $temp_fh, '<', $temp_file);
+#			    while ( my $line = <$temp_fh> ) {
+#				print $protein_fh $line;
+#			    }
 			}
 		    }
+		    if ($debug) {print "total number of proteins is scalar(@keys)\nsaving to $results_folder/$uniprot.proteins\n";}
+		    download_proteins_using_acc_num($protein_fh, @keys);
 		}
 		print STDERR "$count proteins were downloaded from +/-$range bp from $uniprot\n";
 		unlink glob "$results_folder/*.tmp";
@@ -579,19 +583,41 @@ it is used in download_proteins_from_range subroutine.
 =cut
 sub download_proteins_using_acc_num
 { 
-    my ($temp_file, $id)=@_;
+    my ($temp_file, @id)=@_;
     if (!scalar(@_)==2)
     {
 	die "number of arguments is incorrect for download_proteins_using_acc_num\n";
     }
-    my $factory = Bio::DB::EUtilities->new(-eutil   => 'efetch',
+    my $factory = Bio::DB::EUtilities->new(-eutil   => 'epost',
 					   -db      => 'protein',
-					   -id      => $id,
-					   -email   => 'foo@mail.ru',
+					   -id      => \@id,
+					   -email   => 'smyshlya@embl.de',
 					   -rettype => 'fasta',
-					   -api_key => $api_key
+					   -api_key => $api_key,
+					   -keep_histories => 1
 );
-    $factory->get_Response(-file => $temp_file);
+# not sure exactly what happens here, took it from https://bioperl.org/howtos/EUtilities_Cookbook_HOWTO.html 
+# "How do I retrieve a long list of sequences using a query?"
+    if (my $hist = $factory->next_History) {
+	$factory->set_parameters(-eutil => 'efetch',
+				 -rettype => 'fasta',
+				 -history => $hist);
+	my $retry = 0; my ($retmax, $retstart) = (500,0);
+	$factory->set_parameters(-retmax => $retmax,
+				 -retstart => $retstart);
+	eval{
+	    $factory->get_Response(-cb =>
+				   sub {my ($data) = @_; print $temp_file $data} );
+	};
+	if ($@) {
+	    die "Server error: $@.  Try again later" if $retry == 5;
+	    print STDERR "Server error, redo #$retry\n";
+	    $retry++ && redo RETRIEVE_SEQS;
+	}
+	print "Retrieved $retstart";
+	$retstart += $retmax;
+	
+    }
     return;
 }
 
