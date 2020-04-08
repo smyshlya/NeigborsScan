@@ -2,7 +2,7 @@
 
 This repository contains Perl script neighbors_scan.pl and two example input files: example_mapping_table and CONJscan.hmm3.
 
-neighbors_scan.pl implements the search of conserved proteins in the genome found within user defined proximity from proteins of interest. Proteins of interest are defined in the input mapping table file ('uniprot accession number' -> 'GI', such as 'example_mapping_table'). This file can be produced [here] (http://www.uniprot.org/uploadlists/) using a list of Uniprot accessions. Conserved proteins to be scanned for are defined in the input hmm library.
+neighbors_scan.pl implements the search of conserved proteins in the genome found within user defined proximity from proteins of interest. Proteins of interest are defined in the input mapping table file ('uniprot accession number' -> 'GI', such as 'example_mapping_table'). This file can be produced [here](http://www.uniprot.org/uploadlists/) using a list of Uniprot accessions. Conserved proteins to be scanned for are defined in the input hmm library.
  
 The script 
 * finds accession numbers of nucleotide sequence, where the input uniprot sequence is located 
