@@ -8,7 +8,7 @@ The script
 * finds accession numbers of nucleotide sequence, where the input uniprot sequence is located 
 * downloads all proteins within a specified range from the beginning of the input uniprot sequence
 * runs hmmscan analysis against the input hmm library using the downloaded proteins as queries 
-* parses the results into output file ('example_mapping_table.out'). The output file can be uploaded as a dataset at [iTol] (http://itol.embl.de/upload.cgi)
+* parses the results into output file ('example_mapping_table.out'). The output file can be uploaded as a dataset at [iTol](http://itol.embl.de/upload.cgi)
  
 The script produces many additional output files:
 *annotation files for nucleotide sequences (.ft)
