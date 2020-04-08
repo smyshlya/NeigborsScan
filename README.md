@@ -1,7 +1,5 @@
 # README #
 
-### What is this repository for? ###
-
 This repository contains Perl script neighbors_scan.pl and two example input files: example_mapping_table and CONJscan.hmm3.
 
 neighbors_scan.pl implements the search of conserved proteins in the genome found within user defined proximity from proteins of interest. Proteins of interest are defined in the input mapping table file ('uniprot accession number' -> 'GI', such as 'example_mapping_table'). This file can be retrieved from http://www.uniprot.org/uploadlists/. Conserved proteins to be discovered are defined in the input hmm library (example library is 'CONJscan.hmm3').
@@ -18,6 +16,8 @@ The script produces many additional output files:
 
 -files for convertion from uniprot accession numbers to genbank accession numbers and for retrieving corresponding coordinates (input_mapping_table.uniprot_to_an, ~.coordinates, ~.elink, ~.long)
 
+# CITATION #
+Smyshlyaev G, Barabas O., Bateman A. Sequence analysis allows functional annotation of tyrosine recombinases in prokaryotic genomes. 2019. BioRxiv.
 ### How do I get set up? ###
 
 * Dependencies:
