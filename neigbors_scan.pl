@@ -22,7 +22,7 @@ my $range=100000;
 
 #the hmm database to be queried against
 my $hmm_folder='hmm';
-my $hmm_profile='AICE_conj.hmm'; 
+my $hmm_profile='Cas_Cas1.hmm'; 
 
 #threshold e-value for hmmscan hits
 my $dom_set=1e-10; 
@@ -213,6 +213,7 @@ sub parse_hmmres
 	my $hits_ref=get_hits ($results_folder, $hmm_profile, $uniprot);
 
 	my @hits = uniq (keys %$hits_ref);
+	if ($debug) {print"keys are @hits\n";}
 	if (!defined $uniprot_strand)
 	{
 	    print STDERR "failed to parse $uniprot\n";
@@ -226,6 +227,8 @@ sub parse_hmmres
 		foreach (@hits)
 		{
 		    my $hit=$_;
+#		    my @keys333 = uniq (keys %$start_hash);
+#		    if($debug){print"keys to compare are: @keys333\n";}
 		    if (!defined ${$start_hash}{$hit})
 		    {
 			print STDERR "failed to find coordinates for hmmscan hit $hit from $uniprot\n";
@@ -348,9 +351,11 @@ sub get_hits
 	    if ($split_string[12]<$dom_set)
 	    {
 		my $name=$split_string[3];
-		my @split=split (/\|/, $name);
-		$split[3]=~s/\.[1-9]//;
-		$hits{$split[3]}=$split_string[0];
+		if($debug){print "corresponding name is $name and its hit is $split_string[0]\n";}
+#		my @split=split (/\|/, $name);
+		$name=~s/\.[1-9]//;
+#		$hits{$split[3]}=$split_string[0];
+		$hits{$name}=$split_string[0];
 	    }
 	}
     }
@@ -554,7 +559,7 @@ sub download_proteins_from_range
 #			    }
 			}
 		    }
-		    if ($debug) {print "total number of proteins is scalar(@keys)\nsaving to $results_folder/$uniprot.proteins\n";}
+		    if ($debug) {print "total number of proteins is @keys\nsaving to $results_folder/$uniprot.proteins\n";}
 		    download_proteins_using_acc_num($protein_fh, @keys);
 		}
 		print STDERR "$count proteins were downloaded from +/-$range bp from $uniprot\n";
