@@ -27,11 +27,11 @@ Bioperl, hmmscan, hmmpress
 * How to run tests
 
 Specify input files, folder for saving the results and range for the scan in the script. Then run:
-
-`<addr>`hmmpress input_hmm_library 
-`<addr>`cd 'script_folder'
-`<addr>`perl neigbors_scan.pl
-
+```console
+hmmpress input_hmm_library 
+cd 'script_folder'
+perl neigbors_scan.pl
+```
 * Deployment instructions
 
 
