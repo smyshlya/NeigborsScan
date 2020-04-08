@@ -31,6 +31,3 @@ Specify input files, folder for saving the results and range for the scan in the
 hmmpress input_hmm_library 
 perl neigbors_scan.pl
 ```
-* Deployment instructions
-
-
