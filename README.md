@@ -1,48 +1,32 @@
 # README #
 
-### What is this repository for? ###
+This repository contains Perl script neighbors_scan.pl and an example input file: example_mapping_table.
 
-This repository contains Perl script neighbors_scan.pl and two example input files: example_mapping_table and CONJscan.hmm3.
-
-neighbors_scan.pl implements the search of conserved proteins in the genome found within user defined proximity from proteins of interest. Proteins of interest are defined in the input mapping table file ('uniprot accession number' -> 'GI', such as 'example_mapping_table'). This file can be retrieved from http://www.uniprot.org/uploadlists/. Conserved proteins to be discovered are defined in the input hmm library (example library is 'CONJscan.hmm3').
+neighbors_scan.pl implements the search of conserved proteins in the genome found within user defined proximity from proteins of interest. Proteins of interest are defined in the input mapping table file ('uniprot accession number' -> 'GI', such as 'example_mapping_table'). This file can be produced [here](http://www.uniprot.org/uploadlists/) using a list of Uniprot accessions. Conserved proteins to be scanned for are defined in the input hmm library.
  
-The script 1) finds accession numbers of nucleotide sequence, where the input uniprot sequence is located; 2) downloads all proteins within a specified range from the beginning of the input uniprot sequence; 3) runs hmmscan analysis against the input hmm library using the downloaded proteins as queries; 4) parses the results into output file ('example_mapping_table.out'). The output file can be uploaded as a dataset at http://itol.embl.de/upload.cgi
+The script 
+* finds accession numbers of nucleotide sequence, where the input uniprot sequence is located 
+* downloads all proteins within a specified range from the beginning of the input uniprot sequence
+* runs hmmscan analysis against the input hmm library using the downloaded proteins as queries 
+* parses the results into output file ('example_mapping_table.out'). The output file can be uploaded as a dataset at [iTol](http://itol.embl.de/upload.cgi)
  
 The script produces many additional output files:
+*annotation files for nucleotide sequences (.ft)
+*protein files (.prot)
+*results of hmmscan (.hmm_res)
+*files for convertion from uniprot accession numbers to genbank accession numbers and for retrieving corresponding coordinates (input_mapping_table.uniprot_to_an, ~.coordinates, ~.elink, ~.long)
 
--annotation files for nucleotide sequences (.ft)
-
--protein files (.prot)
-
--results of hmmscan (.hmm_res)
-
--files for convertion from uniprot accession numbers to genbank accession numbers and for retrieving corresponding coordinates (input_mapping_table.uniprot_to_an, ~.coordinates, ~.elink, ~.long)
-
-### How do I get set up? ###
-
+# Citation #
+Smyshlyaev G, Barabas O., Bateman A. [Sequence analysis allows functional annotation of tyrosine recombinases in prokaryotic genomes.](https://www.biorxiv.org/content/10.1101/542381v1) 2019. BioRxiv.
+# Setting up #
 * Dependencies:
 
 Bioperl, hmmscan, hmmpress
 
-* How to run tests
+* How to run tests:
 
-Specify input files, folder for saving the results and range for the scan in the script. Then run:
-
+[Download](https://github.com/gem-pasteur/Macsyfinder_models/tree/master/models/Conjugation/profiles) CONJscan database. [This](https://www.ncbi.nlm.nih.gov/pubmed/31584169) is the paper where the database is described. Specify input files, folder for saving the results and range for the scan in the script. Then run:
+```bat
 hmmpress input_hmm_library 
-
-cd script_folder
-
 perl neigbors_scan.pl
-
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+```
