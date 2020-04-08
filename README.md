@@ -16,9 +16,9 @@ The script produces many additional output files:
 
 -files for convertion from uniprot accession numbers to genbank accession numbers and for retrieving corresponding coordinates (input_mapping_table.uniprot_to_an, ~.coordinates, ~.elink, ~.long)
 
-# CITATION #
+# Citation #
 Smyshlyaev G, Barabas O., Bateman A. Sequence analysis allows functional annotation of tyrosine recombinases in prokaryotic genomes. 2019. BioRxiv.
-### How do I get set up? ###
+# Setting up #
 
 * Dependencies:
 
@@ -36,13 +36,4 @@ perl neigbors_scan.pl
 
 * Deployment instructions
 
-### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
