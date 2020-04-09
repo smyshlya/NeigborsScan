@@ -4,7 +4,7 @@ use strict;
 use Bio::DB::EUtilities;
 use Bio::Seq;
 use List::MoreUtils qw(uniq);
-my $debug=1;
+my $debug=0;
 
 =head
 IMPORTANT!
@@ -12,7 +12,7 @@ Therfore problems may occure for Uniprot obsolete proteins. Try to avoid them.
 =cut
 
 #this file is 'uniprot to gi' mapping table of the proteins of interest retrieved from http://www.uniprot.org/uploadlists/
-my $file='Boiedes_TRs.mapping_table.txt';
+my $file='IntKX_Ecoli_UniprotKB.txt';
 my $api_key = 'bc40eac9be26ca5a6e911b42238d9a983008';
 #the folder where you want to keep your results
 my $results_folder='results'; 
@@ -22,7 +22,7 @@ my $range=100000;
 
 #the hmm database to be queried against
 my $hmm_folder='hmm';
-my $hmm_profile='Cas_Cas1.hmm'; 
+my $hmm_profile='Conjscan.hmm'; 
 
 #threshold e-value for hmmscan hits
 my $dom_set=1e-10; 
@@ -869,7 +869,7 @@ sub fetch_annotation_table_using_gi
 	    my $factory = Bio::DB::EUtilities->new(-eutil   => 'efetch',
 						   -db      => 'nucleotide',
 						   -id      => $nuc,
-						   -email   => 'mymail@foo.bar',
+						   -email   => 'smyshlya@embl.de',
 						   -rettype => 'ft',
 						   -api_key => $api_key
 						   
