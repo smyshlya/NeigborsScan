@@ -10,7 +10,7 @@ The script
 * runs hmmscan analysis against the input hmm library using the downloaded proteins as queries 
 * parses the results into output file ('example_mapping_table.out'). The output file can be uploaded as a dataset at [iTol](http://itol.embl.de/upload.cgi)
  
- ![1](https://user-images.githubusercontent.com/58728948/113288263-0265d800-92ef-11eb-8c5e-a3b2d12e1155.png)
+![1](https://user-images.githubusercontent.com/58728948/113307335-5085d600-9305-11eb-8911-938a1a35cd86.png)
  
 The script produces many additional output files:
 *annotation files for nucleotide sequences (.ft)
@@ -27,8 +27,10 @@ Bioperl, hmmscan, hmmpress
 
 * How to run tests:
 
+For identifying conjugation proteins associated with the integrase proteins:
 [Download](https://github.com/gem-pasteur/Macsyfinder_models/tree/master/models/Conjugation/profiles) CONJscan database. [This](https://www.ncbi.nlm.nih.gov/pubmed/31584169) is the paper where the database is described. Specify input files, folder for saving the results and range for the scan in the script. Then run:
 ```bat
+mkdir result/
 hmmpress input_hmm_library 
 perl neigbors_scan.pl
 ```
