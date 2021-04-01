@@ -9,7 +9,7 @@ The script
 * downloads all proteins within a specified range from the beginning of the input uniprot sequence
 * runs hmmscan analysis against the input hmm library using the downloaded proteins as queries 
 * parses the results into output file ('example_mapping_table.out'). The output file can be uploaded as a dataset at [iTol](http://itol.embl.de/upload.cgi)
- ![1](https://user-images.githubusercontent.com/58728948/113287575-0c3b0b80-92ee-11eb-9db4-79a0556cfe75.png raw=true "Title")
+ ![1](https://user-images.githubusercontent.com/58728948/113287575-0c3b0b80-92ee-11eb-9db4-79a0556cfe75.png "Title")
  
 The script produces many additional output files:
 *annotation files for nucleotide sequences (.ft)
