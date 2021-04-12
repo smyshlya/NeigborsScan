@@ -13,7 +13,7 @@ Therfore problems may occure for Uniprot obsolete proteins. Try to avoid them.
 
 #this file is 'uniprot to gi' mapping table of the proteins of interest retrieved from http://www.uniprot.org/uploadlists/
 my $file='example.mapping_table';
-my $api_key = 'bc40eac9be26ca5a6e911b42238d9a983008';
+my $api_key = your_api_key;
 #the folder where you want to keep your results
 my $results_folder='results'; 
 
