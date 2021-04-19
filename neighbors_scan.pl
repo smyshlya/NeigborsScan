@@ -18,7 +18,7 @@ my $api_key = your_api_key;
 my $results_folder='results'; 
 
 #the length of adjacent regions (in nucleotides) to be scanned (in both directions)
-my $range=100000; 
+my $range=10000; 
 
 #the hmm database to be queried against
 my $hmm_folder='hmm';
@@ -28,7 +28,9 @@ my $hmm_profile='Conjscan.hmm';
 my $dom_set=1e-10; 
 
 #hex color definition for hmmscan hits
-my $color="#000ff0";
+my $color="#000ff0"; #this is a default color for all the hits
+my %color; # below you can set the colors for the profile HMM hits $color{'profile NAME'} = 'hex color'
+$color{'Phage_integrase'} = "#32a852"; 
 
 my $start_run=time();
 my $gis_hash=get_gis_from_mapping_table($file); 
@@ -227,6 +229,13 @@ sub parse_hmmres
 		foreach (@hits)
 		{
 		    my $hit=$_;
+		    if (exists($color{${$hits_ref}{$hit}}))
+		    {}
+		    else
+		    {
+			$color{${$hits_ref}{$hit}}=$color;
+		    }
+			
 #		    my @keys333 = uniq (keys %$start_hash);
 #		    if($debug){print"keys to compare are: @keys333\n";}
 		    if (!defined ${$start_hash}{$hit})
@@ -261,11 +270,11 @@ sub parse_hmmres
 				}
 				if (${$strand_hash}{$hit}=~m/plus/)
 				{
-				    print $res_fh "PR|$hmm_start|$hmm_end|$color|${$hits_ref}{$hit}\t";
+				    print $res_fh "PR|$hmm_start|$hmm_end|$color{${$hits_ref}{$hit}}|${$hits_ref}{$hit}\t";
 				}
 				if (${$strand_hash}{$hit}=~m/minus/)
 				{
-				    print $res_fh "PL|$hmm_end|$hmm_start|$color|${$hits_ref}{$hit}\t";
+				    print $res_fh "PL|$hmm_end|$hmm_start|$color{${$hits_ref}{$hit}}|${$hits_ref}{$hit}\t";
 				}
 			    }
 			    else 
@@ -274,11 +283,11 @@ sub parse_hmmres
 				$hmm_end=${$end_hash}{$hit};
 				if (${$strand_hash}{$hit}=~m/plus/)
 				{
-				    print $res_fh "PR|$hmm_start|$hmm_end|$color|${$hits_ref}{$hit}\t";
+				    print $res_fh "PR|$hmm_start|$hmm_end|$color{${$hits_ref}{$hit}}|${$hits_ref}{$hit}\t";
 				}
 				if (${$strand_hash}{$hit}=~m/minus/)
 				{
-				    print $res_fh "PL|$hmm_end|$hmm_start|$color|${$hits_ref}{$hit}\t";
+				    print $res_fh "PL|$hmm_end|$hmm_start|$color{${$hits_ref}{$hit}}|${$hits_ref}{$hit}\t";
 				}
 			    }
 			}
@@ -291,6 +300,12 @@ sub parse_hmmres
 		foreach (@hits)
 		{
 		    my $hit=$_;
+                    if (exists($color{${$hits_ref}{$hit}}))
+                    {}
+                    else
+                    {
+			$color{${$hits_ref}{$hit}}=$color;
+                    }
 		    if (!defined ${$start_hash}{$hit}) {print STDERR "failed to find coordinates for hmmscan hit $hit from $uniprot\n";}
 		    else
 		    {
@@ -314,11 +329,11 @@ sub parse_hmmres
 			    $hmm_end=($size-$start)+$uniprot_start-${$end_hash}{$hit};
 			    if (${$strand_hash}{$hit}=~m/plus/)
 			    {
-				print $res_fh "PL|$hmm_end|$hmm_start|$color|${$hits_ref}{$hit}\t";
+				print $res_fh "PL|$hmm_end|$hmm_start|$color{${$hits_ref}{$hit}}|${$hits_ref}{$hit}\t";
 			    }
 			    if (${$strand_hash}{$hit}=~m/minus/)
 			    {
-				print $res_fh "PR|$hmm_start|$hmm_end|$color|${$hits_ref}{$hit}\t";
+				print $res_fh "PR|$hmm_start|$hmm_end|$color{${$hits_ref}{$hit}}|${$hits_ref}{$hit}\t";
 			    }
 			}
 		    }
