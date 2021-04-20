@@ -6,19 +6,19 @@ use Bio::Seq;
 use List::MoreUtils qw(uniq);
 my $debug=0;
 
-=head
-IMPORTANT!
-Therfore problems may occure for Uniprot obsolete proteins. Try to avoid them. 
-=cut
-
 #this file is 'uniprot to gi' mapping table of the proteins of interest retrieved from http://www.uniprot.org/uploadlists/
 my $file='example.mapping_table';
-my $api_key = your_api_key;
+my $api_key = 'bc40eac9be26ca5a6e911b42238d9a983008';
 #the folder where you want to keep your results
 my $results_folder='results'; 
+if (!-e $results_folder)
+    {
+        system ("mkdir $results_folder");
+        print STDERR "all results will be saved into $results_folder\n"
+    }
 
 #the length of adjacent regions (in nucleotides) to be scanned (in both directions)
-my $range=10000; 
+my $range=20000; 
 
 #the hmm database to be queried against
 my $hmm_folder='hmm';

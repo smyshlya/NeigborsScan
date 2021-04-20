@@ -28,12 +28,7 @@ Bioperl, hmmscan, hmmpress
 * How to run tests:
 
 For identifying conjugation proteins associated with the integrase proteins:
-[Download](https://github.com/gem-pasteur/Macsyfinder_models/tree/master/models/Conjugation/profiles) CONJscan database. [This](https://www.ncbi.nlm.nih.gov/pubmed/31584169) is the paper where the database is described. Specify input files, folder for saving the results, range for the scan  and your [API key](https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/#:~:text=To%20create%20the%20key%2C%20go,and%20copy%20the%20resulting%20key.) to access NCBI in the script. Then run:
+[Download](https://github.com/gem-pasteur/Macsyfinder_models/tree/master/models/Conjugation/profiles) CONJscan database. [This](https://www.ncbi.nlm.nih.gov/pubmed/31584169) is the paper where the database is described. Specify input files (mapping table and profile HMM database), folder for saving the results, range for the scan  and your [API key](https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/#:~:text=To%20create%20the%20key%2C%20go,and%20copy%20the%20resulting%20key.) to access NCBI in the script. Then run:
 ```bat
-mkdir results/
-mkdir hmm/
-cd hmm/
-hmmpress input_hmm_library 
-cd ..
 perl neigbors_scan.pl
 ```
