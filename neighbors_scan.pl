@@ -6,19 +6,29 @@ use Bio::Seq;
 use List::MoreUtils qw(uniq);
 my $debug=0;
 
-#this file is 'uniprot to gi' mapping table of the proteins of interest retrieved from http://www.uniprot.org/uploadlists/
-my $file='example.mapping_table';
-my $api_key = 'bc40eac9be26ca5a6e911b42238d9a983008';
+#INPUT FILES/PARAMETERS
+
+#this file is 'uniprot to gi' mapping table of the proteins of interest retrieved from http://www.uniprot.org/uploadlists/         
+my $file='example.mapping_table'; 
+
+# your NCBI API key (see README)
+my $api_key = ''; 
+
+# your email
+my $email = ''; 
+
 #the folder where you want to keep your results
-my $results_folder='results'; 
-if (!-e $results_folder)
-    {
-        system ("mkdir $results_folder");
-        print STDERR "all results will be saved into $results_folder\n"
-    }
+my $results_folder='results';
 
 #the length of adjacent regions (in nucleotides) to be scanned (in both directions)
 my $range=20000; 
+
+#the hmm database to be queried against                                                                                                                                                                                                                                                                          
+my $hmm_folder='hmm';
+my $hmm_profile='Conjscan.hmm';
+
+#threshold e-value for hmmscan hits                                                                                                                                                                                                                                                                              
+my $dom_set=1e-10;
 
 #the hmm database to be queried against
 my $hmm_folder='hmm';
@@ -29,10 +39,18 @@ my $dom_set=1e-10;
 
 #hex color definition for hmmscan hits
 my $color="#000ff0"; #this is a default color for all the hits
-my %color; # below you can set the colors for the profile HMM hits $color{'profile NAME'} = 'hex color'
+my %color;
+
+# below you can set the colors for the profile HMM hits $color{'profile NAME'} = 'hex color'
 $color{'Phage_integrase'} = "#32a852"; 
 
+
 my $start_run=time();
+if (!-e $results_folder)
+    {
+        system ("mkdir $results_folder");
+        print STDERR "all results will be saved into $results_folder\n"
+    }
 my $gis_hash=get_gis_from_mapping_table($file); 
 my $uniprot_to_acc_num=acc_num_using_gis($gis_hash, $file);
 my $nuc_hash=elink_nuc($gis_hash);
@@ -611,7 +629,7 @@ sub download_proteins_using_acc_num
     my $factory = Bio::DB::EUtilities->new(-eutil   => 'epost',
 					   -db      => 'protein',
 					   -id      => \@id,
-					   -email   => 'smyshlya@embl.de',
+					   -email   => $email,
 					   -rettype => 'fasta',
 					   -api_key => $api_key,
 					   -keep_histories => 1
@@ -739,7 +757,7 @@ sub acc_num_using_gis
     {
         open (my $acc_num_fh, '>', $file.".acc_num");
         my $factory = Bio::DB::EUtilities->new(-eutil => 'esummary',
-                                               -email => 'mymail@foo.bar',
+                                               -email => $email,
                                                -db    => 'protein',
                                                -id    => \@ids);
         while (my $ds = $factory->next_DocSum) {
@@ -819,7 +837,7 @@ sub elink_nuc
 	push @prot_gis, @$array;
     }
     my $factory = Bio::DB::EUtilities->new(-eutil  => 'elink',
-					   -email  => '_gera88@mail.ru',
+					   -email  => $email,
 					   -db     => 'nucleotide',
 					   -correspondence => 1,
 					   -dbfrom => 'protein',
@@ -884,7 +902,7 @@ sub fetch_annotation_table_using_gi
 	    my $factory = Bio::DB::EUtilities->new(-eutil   => 'efetch',
 						   -db      => 'nucleotide',
 						   -id      => $nuc,
-						   -email   => 'smyshlya@embl.de',
+						   -email   => $email,
 						   -rettype => 'ft',
 						   -api_key => $api_key
 						   
